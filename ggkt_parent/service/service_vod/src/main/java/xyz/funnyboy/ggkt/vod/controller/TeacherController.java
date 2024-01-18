@@ -26,6 +26,7 @@ import java.util.List;
 @Api(tags = "讲师管理接口")
 @RestController
 @RequestMapping("/admin/vod/teacher")
+@CrossOrigin
 public class TeacherController
 {
     @Autowired
@@ -78,9 +79,23 @@ public class TeacherController
         return Result.ok(pages);
     }
 
+    @ApiOperation(value = "逻辑删除讲师")
+    @DeleteMapping("remove/{id}")
+    public Result removeById(
+            @ApiParam(name = "id",
+                      value = "讲师ID",
+                      required = true)
+            @PathVariable
+                    String id) {
+        final boolean remove = teacherService.removeById(id);
+        return remove ?
+               Result.ok() :
+               Result.fail();
+    }
+
     @ApiOperation(value = "新增讲师")
-    @PostMapping("saveTeacher")
-    public Result save(
+    @PostMapping("addTeacher")
+    public Result addTeacher(
             @ApiParam(name = "teacher",
                       value = "新增讲师对象",
                       required = true)
@@ -118,27 +133,14 @@ public class TeacherController
                Result.fail();
     }
 
-    @ApiOperation(value = "逻辑删除讲师")
-    @DeleteMapping("remove/{id}")
-    public Result removeById(
-            @ApiParam(name = "id",
-                      value = "讲师ID",
-                      required = true)
-            @PathVariable
-                    String id) {
-        final boolean remove = teacherService.removeById(id);
-        return remove ?
-               Result.ok() :
-               Result.fail();
-    }
-
     @ApiOperation(value = "批量删除讲师")
     @DeleteMapping("removeBatch")
     public Result removeBatch(
             @ApiParam(name = "ids",
                       value = "讲师ID",
                       required = true)
-                    List<String> ids) {
+            @RequestBody
+                    List<Long> ids) {
         final boolean remove = teacherService.removeByIds(ids);
         return remove ?
                Result.ok() :
