@@ -49,4 +49,11 @@ export default {
       data: ids
     })
   },
+  // 所有讲师列表
+  findAll() {
+    return request({
+      url: `${api_name}/findAll`,
+      method: 'get'
+    })
+  }
 }
