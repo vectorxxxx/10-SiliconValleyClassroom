@@ -3,12 +3,16 @@ package xyz.funnyboy.ggkt.vod.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import xyz.funnyboy.ggkt.model.vod.Course;
+import xyz.funnyboy.ggkt.model.vod.CourseDescription;
+import xyz.funnyboy.ggkt.vo.vod.CourseFormVo;
 import xyz.funnyboy.ggkt.vo.vod.CourseQueryVo;
 import xyz.funnyboy.ggkt.vod.mapper.CourseMapper;
+import xyz.funnyboy.ggkt.vod.service.CourseDescriptionService;
 import xyz.funnyboy.ggkt.vod.service.CourseService;
 import xyz.funnyboy.ggkt.vod.service.SubjectService;
 import xyz.funnyboy.ggkt.vod.service.TeacherService;
@@ -34,6 +38,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private CourseDescriptionService courseDescriptionService;
 
     /**
      * 分页查询
@@ -71,6 +78,75 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         map.put("totalPage", totalPage);
         map.put("records", records);
         return map;
+    }
+
+    /**
+     * 保存课程信息
+     *
+     * @param courseFormVo 课程表单 VO
+     * @return {@link Long}
+     */
+    @Override
+    public Long saveCourseInfo(CourseFormVo courseFormVo) {
+        // 保存课程信息
+        final Course course = new Course();
+        BeanUtils.copyProperties(courseFormVo, course);
+        baseMapper.insert(course);
+
+        // 保存课程描述信息
+        final String description = courseFormVo.getDescription();
+        final CourseDescription courseDescription = new CourseDescription();
+        courseDescription.setCourseId(course.getId());
+        courseDescription.setDescription(description);
+        courseDescriptionService.save(courseDescription);
+
+        return course.getId();
+    }
+
+    /**
+     * 按 ID 获取课程信息
+     *
+     * @param id 编号
+     * @return {@link CourseFormVo}
+     */
+    @Override
+    public CourseFormVo getCourseInfoById(Long id) {
+        // 获取课程信息
+        final Course course = baseMapper.selectById(id);
+        if (course == null) {
+            return null;
+        }
+
+        // 获取课程简介信息
+        final CourseDescription courseDescription = courseDescriptionService.getById(id);
+
+        // 组装结果
+        final CourseFormVo courseFormVo = new CourseFormVo();
+        BeanUtils.copyProperties(course, courseFormVo);
+        final String description = courseDescription.getDescription();
+        if (!StringUtils.isEmpty(description)) {
+            courseFormVo.setDescription(description);
+        }
+        return courseFormVo;
+    }
+
+    /**
+     * 更新课程信息
+     *
+     * @param courseFormVo 课程表单 VO
+     */
+    @Override
+    public void updateCourseInfo(CourseFormVo courseFormVo) {
+        // 更新课程基本信息
+        final Course course = new Course();
+        BeanUtils.copyProperties(courseFormVo, course);
+        baseMapper.updateById(course);
+
+        // 更新课程简介信息
+        final CourseDescription courseDescription = new CourseDescription();
+        courseDescription.setId(course.getId());
+        courseDescription.setDescription(courseFormVo.getDescription());
+        courseDescriptionService.updateById(courseDescription);
     }
 
     /**
