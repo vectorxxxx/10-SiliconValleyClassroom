@@ -1,5 +1,6 @@
 package xyz.funnyboy.ggkt.vod.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import xyz.funnyboy.ggkt.model.vod.CourseDescription;
@@ -18,4 +19,13 @@ import xyz.funnyboy.ggkt.vod.service.CourseDescriptionService;
 public class CourseDescriptionServiceImpl extends ServiceImpl<CourseDescriptionMapper, CourseDescription> implements CourseDescriptionService
 {
 
+    /**
+     * 按课程 ID 删除
+     *
+     * @param id 编号
+     */
+    @Override
+    public void removeByCourseId(Long id) {
+        baseMapper.delete(new LambdaQueryWrapper<CourseDescription>().eq(CourseDescription::getCourseId, id));
+    }
 }

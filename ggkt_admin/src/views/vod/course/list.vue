@@ -33,7 +33,7 @@
 
         <!-- 标题 -->
         <el-form-item label="标题">
-          <el-input v-model="searchObj.title" placeholder="课程标题" />
+          <el-input v-model="searchObj.title" placeholder="课程标题"/>
         </el-form-item>
         <!-- 讲师 -->
         <el-form-item label="讲师">
@@ -57,7 +57,7 @@
 
     <!-- 工具按钮 -->
     <el-card class="operate-container" shadow="never">
-      <i class="el-icon-tickets" style="margin-top: 5px" />
+      <i class="el-icon-tickets" style="margin-top: 5px"/>
       <span style="margin-top: 5px">数据列表</span>
       <el-button class="btn-add" @click="add()">添加</el-button>
     </el-card>
@@ -112,8 +112,8 @@
       <el-table-column prop="status" label="课程状态" width="100" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status === 0 ? 'warning' : 'success'">{{
-            scope.row.status === 0 ? '未发布' : '已发布'
-          }}
+              scope.row.status === 0 ? '未发布' : '已发布'
+            }}
           </el-tag>
         </template>
       </el-table-column>
@@ -214,7 +214,7 @@ export default {
 
     // 添加课程
     add() {
-      this.$router.push({ path: '/vodcourse/course/info' })
+      this.$router.push({path: '/vodcourse/course/info'})
     },
 
     // 改变每页大小
@@ -236,6 +236,24 @@ export default {
       // 清除二级分类
       this.subjectLevelTwoList = []
       this.fetchData()
+    },
+
+    // 删除课程
+    removeById(id) {
+      this.$confirm('此操作将永久删除该课程，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return courseApi.removeById(id)
+      }).then(() => {
+        this.$message.success('删除成功')
+        this.fetchData()
+      }).catch(err => {
+        if (err === 'cancel') {
+          this.$message.info('已取消删除')
+        }
+      })
     }
   }
 }

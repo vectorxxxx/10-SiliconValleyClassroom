@@ -14,4 +14,10 @@ import xyz.funnyboy.ggkt.model.vod.Video;
 public interface VideoService extends IService<Video>
 {
 
+    /**
+     * 按课程 ID 删除
+     *
+     * @param id 编号
+     */
+    void removeByCourseId(Long id);
 }

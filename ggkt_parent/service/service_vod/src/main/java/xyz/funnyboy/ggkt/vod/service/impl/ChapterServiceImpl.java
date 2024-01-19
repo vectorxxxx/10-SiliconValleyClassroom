@@ -74,4 +74,14 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
         }
         return chapterVoList;
     }
+
+    /**
+     * 按课程 ID 删除
+     *
+     * @param id 编号
+     */
+    @Override
+    public void removeByCourseId(Long id) {
+        baseMapper.delete(new LambdaQueryWrapper<Chapter>().eq(Chapter::getCourseId, id));
+    }
 }

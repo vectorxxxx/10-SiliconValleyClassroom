@@ -14,4 +14,10 @@ import xyz.funnyboy.ggkt.model.vod.CourseDescription;
 public interface CourseDescriptionService extends IService<CourseDescription>
 {
 
+    /**
+     * 按课程 ID 删除
+     *
+     * @param id 编号
+     */
+    void removeByCourseId(Long id);
 }

@@ -13,10 +13,7 @@ import xyz.funnyboy.ggkt.vo.vod.CourseFormVo;
 import xyz.funnyboy.ggkt.vo.vod.CoursePublishVo;
 import xyz.funnyboy.ggkt.vo.vod.CourseQueryVo;
 import xyz.funnyboy.ggkt.vod.mapper.CourseMapper;
-import xyz.funnyboy.ggkt.vod.service.CourseDescriptionService;
-import xyz.funnyboy.ggkt.vod.service.CourseService;
-import xyz.funnyboy.ggkt.vod.service.SubjectService;
-import xyz.funnyboy.ggkt.vod.service.TeacherService;
+import xyz.funnyboy.ggkt.vod.service.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -43,6 +40,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private CourseDescriptionService courseDescriptionService;
+
+    @Autowired
+    private ChapterService chapterService;
+
+    @Autowired
+    private VideoService videoService;
 
     /**
      * 分页查询
@@ -146,7 +149,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
         // 更新课程简介信息
         final CourseDescription courseDescription = new CourseDescription();
-        courseDescription.setId(course.getId());
+        courseDescription.setCourseId(course.getId());
         courseDescription.setDescription(courseFormVo.getDescription());
         courseDescriptionService.updateById(courseDescription);
     }
@@ -174,6 +177,23 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         course.setPublishTime(new Date());
         course.setStatus(1);
         baseMapper.updateById(course);
+    }
+
+    /**
+     * 按 ID 删除课程信息
+     *
+     * @param id 编号
+     */
+    @Override
+    public void removeCourseInfoById(Long id) {
+        // 删除小节信息
+        videoService.removeByCourseId(id);
+        // 删除章节信息
+        chapterService.removeByCourseId(id);
+        // 删除课程简介信息
+        courseDescriptionService.removeByCourseId(id);
+        // 删除课程基本信息
+        baseMapper.deleteById(id);
     }
 
     /**

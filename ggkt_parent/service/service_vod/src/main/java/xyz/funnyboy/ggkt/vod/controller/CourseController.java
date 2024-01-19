@@ -115,5 +115,17 @@ public class CourseController
         courseService.publishCourseInfo(id);
         return Result.ok();
     }
+
+    @ApiOperation(value = "删除课程信息")
+    @DeleteMapping("remove/{id}")
+    public Result remove(
+            @ApiParam(name = "id",
+                      value = "课程ID",
+                      required = true)
+            @PathVariable
+                    Long id) {
+        courseService.removeCourseInfoById(id);
+        return Result.ok();
+    }
 }
 

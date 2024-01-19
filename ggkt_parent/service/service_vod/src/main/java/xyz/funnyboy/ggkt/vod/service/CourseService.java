@@ -66,4 +66,11 @@ public interface CourseService extends IService<Course>
      * @param id 编号
      */
     void publishCourseInfo(Long id);
+
+    /**
+     * 按 ID 删除课程信息
+     *
+     * @param id 编号
+     */
+    void removeCourseInfoById(Long id);
 }
