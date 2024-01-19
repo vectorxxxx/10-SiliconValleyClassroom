@@ -123,8 +123,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         // 组装结果
         final CourseFormVo courseFormVo = new CourseFormVo();
         BeanUtils.copyProperties(course, courseFormVo);
-        final String description = courseDescription.getDescription();
-        if (!StringUtils.isEmpty(description)) {
+        if (courseDescription != null) {
+            final String description = courseDescription.getDescription();
             courseFormVo.setDescription(description);
         }
         return courseFormVo;

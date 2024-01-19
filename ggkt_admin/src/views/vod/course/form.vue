@@ -20,16 +20,18 @@
 <script>
 // 引入子组件
 import Info from '@/views/vod/course/components/Info'
+import Chapter from '@/views/vod/course/components/Chapter'
 export default {
   // 注册组件
   components: {
-    Info
+    Info,
+    Chapter
   },
 
   data() {
     return {
       active: 0,
-      courseId: ''
+      courseId: null
     }
   },
 

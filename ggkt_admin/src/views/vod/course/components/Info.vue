@@ -238,7 +238,6 @@ export default {
     updateData() {
       courseApi.updateCourseInfo(this.courseInfo).then(res => {
         this.$message.success(res.message)
-        this.$parent.courseId = res.data
         this.$parent.active = 1
       })
     }
