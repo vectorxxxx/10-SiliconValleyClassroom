@@ -3,6 +3,8 @@ package xyz.funnyboy.ggkt.vod.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.funnyboy.ggkt.model.vod.Subject;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程科目 服务类
@@ -14,4 +16,11 @@ import xyz.funnyboy.ggkt.model.vod.Subject;
 public interface SubjectService extends IService<Subject>
 {
 
+    /**
+     * 选择列表
+     *
+     * @param id 编号
+     * @return {@link Object}
+     */
+    List<Subject> selectList(Long id);
 }
