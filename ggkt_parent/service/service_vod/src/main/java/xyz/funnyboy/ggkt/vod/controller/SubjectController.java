@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @Api(tags = "课程分类管理")
 @RestController
 @RequestMapping("/admin/vod/subject")
-@CrossOrigin
+// @CrossOrigin
 public class SubjectController
 {
     @Autowired

@@ -1,6 +1,9 @@
 package xyz.funnyboy.ggkt.vod.controller;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.funnyboy.ggkt.swagger.result.Result;
 
 import java.util.HashMap;
@@ -8,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/vod/user")
-@CrossOrigin //跨域
+// @CrossOrigin //跨域
 public class UserLoginController
 {
 

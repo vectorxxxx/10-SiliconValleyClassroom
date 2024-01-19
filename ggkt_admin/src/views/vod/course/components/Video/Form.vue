@@ -67,7 +67,7 @@ import vodApi from '@/api/vod/vod'
 export default {
   data() {
     return {
-      BASE_API: 'http://localhost:8301',
+      BASE_API: process.env.VUE_APP_BASE_API,
       dialogVisible: false,
       video: {
         sort: 0,

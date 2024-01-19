@@ -57,7 +57,7 @@ import teacherApi from '@/api/vod/teacher'
 export default {
   data() {
     return {
-      BASE_API: 'http://localhost:8301',
+      BASE_API: process.env.VUE_APP_BASE_API,
       teacher: {
         sort: 0,
         level: 1

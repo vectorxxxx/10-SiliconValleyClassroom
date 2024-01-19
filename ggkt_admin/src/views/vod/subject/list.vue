@@ -57,7 +57,7 @@ import subjectApi from '@/api/vod/subject'
 export default {
   data() {
     return {
-      BASE_API: 'http://localhost:8301',
+      BASE_API: process.env.VUE_APP_BASE_API,
       list: [],
       dialogImportVisible: false
     }

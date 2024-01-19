@@ -20,7 +20,7 @@ import xyz.funnyboy.ggkt.vod.service.VideoService;
 @Api(tags = "课时管理")
 @RestController
 @RequestMapping("/admin/vod/video")
-@CrossOrigin
+// @CrossOrigin
 public class VideoController
 {
     @Autowired
