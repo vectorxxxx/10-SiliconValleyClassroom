@@ -69,7 +69,7 @@ public class VideoController
                       required = true)
             @PathVariable
                     Long id) {
-        videoService.removeById(id);
+        videoService.removeVideoById(id);
         return Result.ok();
     }
 }

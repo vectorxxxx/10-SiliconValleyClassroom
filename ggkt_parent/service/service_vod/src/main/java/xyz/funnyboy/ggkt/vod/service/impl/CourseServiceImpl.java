@@ -187,7 +187,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Override
     public void removeCourseInfoById(Long id) {
         // 删除小节信息
-        videoService.removeByCourseId(id);
+        videoService.removeVideoByCourseId(id);
         // 删除章节信息
         chapterService.removeByCourseId(id);
         // 删除课程简介信息
