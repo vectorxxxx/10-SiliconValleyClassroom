@@ -1,8 +1,10 @@
 package xyz.funnyboy.ggkt.vod.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
 import xyz.funnyboy.ggkt.model.vod.Subject;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -23,4 +25,19 @@ public interface SubjectService extends IService<Subject>
      * @return {@link Object}
      */
     List<Subject> selectList(Long id);
+
+    /**
+     * 导出数据
+     *
+     * @param response 响应
+     */
+    void exportData(HttpServletResponse response);
+
+    /**
+     * 导入数据
+     *
+     * @param file 文件
+     * @return {@link String}
+     */
+    void importData(MultipartFile file);
 }
