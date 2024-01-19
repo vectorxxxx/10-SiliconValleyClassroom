@@ -44,6 +44,21 @@
             <version>2.1.1</version>
         </dependency>
 
+        <!-- 腾讯云VOD依赖 -->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>vod_api</artifactId>
+            <version>2.1.5</version>
+            <!-- Caused by: java.lang.IllegalArgumentException: LoggerFactory is not a Logback LoggerContext but Logback is on the classpath. -->
+            <!-- Either remove Logback or the competing implementation (class org.slf4j.impl.Log4jLoggerFactory loaded from file:/D:/.m2/repository-mine/org/slf4j/slf4j-log4j12/1.7.29/slf4j-log4j12-1.7.29.jar). -->
+            <!-- If you are using WebLogic you will need to add 'org.slf4j' to prefer-application-packages in WEB-INF/weblogic.xml: org.slf4j.impl.Log4jLoggerFactory -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
 </project>

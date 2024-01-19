@@ -28,10 +28,18 @@ public class ConstantPropertiesUtil implements InitializingBean
     @Value("${tencent.cos.file.bucketname}")
     private String bucketName;
 
+    @Value("${tencent.vod.file.procedure}")
+    private String procedure;
+
+    @Value("${tencent.vod.file.endpoint}")
+    private String endpoint;
+
     public static String REGION;
     public static String ACCESS_SECRET_ID;
     public static String ACCESS_SECRET_KEY;
     public static String BUCKET_NAME;
+    public static String PROCEDURE;
+    public static String ENDPOINT;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -39,5 +47,7 @@ public class ConstantPropertiesUtil implements InitializingBean
         ACCESS_SECRET_ID = secretId;
         ACCESS_SECRET_KEY = secretKey;
         BUCKET_NAME = bucketName;
+        PROCEDURE = procedure;
+        ENDPOINT = endpoint;
     }
 }

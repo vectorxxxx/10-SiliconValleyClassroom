@@ -54,7 +54,7 @@ export default {
   created() {
     this.courseId = this.$route.params.id
     const currentDate = new Date()
-    this.startDate = this.dateFormat(new Date(currentDate.getTime()) - 7 * 24 * 60 * 60 * 1000)
+    this.startDate = this.dateFormat(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000))
     this.endDate = this.dateFormat(currentDate)
     this.showChart()
   },
