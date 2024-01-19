@@ -2,6 +2,7 @@ package xyz.funnyboy.ggkt.vod.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import xyz.funnyboy.ggkt.model.vod.Course;
+import xyz.funnyboy.ggkt.vo.vod.CoursePublishVo;
 
 /**
  * <p>
@@ -14,4 +15,11 @@ import xyz.funnyboy.ggkt.model.vod.Course;
 public interface CourseMapper extends BaseMapper<Course>
 {
 
+    /**
+     * 根据课程ID查询课程发布VO
+     *
+     * @param id 编号
+     * @return {@link CoursePublishVo}
+     */
+    CoursePublishVo selectCoursePublishVoById(Long id);
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.funnyboy.ggkt.model.vod.Course;
 import xyz.funnyboy.ggkt.vo.vod.CourseFormVo;
+import xyz.funnyboy.ggkt.vo.vod.CoursePublishVo;
 import xyz.funnyboy.ggkt.vo.vod.CourseQueryVo;
 
 import java.util.Map;
@@ -50,4 +51,19 @@ public interface CourseService extends IService<Course>
      * @param courseFormVo 课程表单 VO
      */
     void updateCourseInfo(CourseFormVo courseFormVo);
+
+    /**
+     * 获取课程发布信息
+     *
+     * @param id 编号
+     * @return {@link CoursePublishVo}
+     */
+    CoursePublishVo getCoursePublishInfo(Long id);
+
+    /**
+     * 发布课程
+     *
+     * @param id 编号
+     */
+    void publishCourseInfo(Long id);
 }

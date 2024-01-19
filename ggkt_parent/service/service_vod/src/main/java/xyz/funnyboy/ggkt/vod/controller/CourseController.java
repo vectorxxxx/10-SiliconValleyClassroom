@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import xyz.funnyboy.ggkt.model.vod.Course;
 import xyz.funnyboy.ggkt.swagger.result.Result;
 import xyz.funnyboy.ggkt.vo.vod.CourseFormVo;
+import xyz.funnyboy.ggkt.vo.vod.CoursePublishVo;
 import xyz.funnyboy.ggkt.vo.vod.CourseQueryVo;
 import xyz.funnyboy.ggkt.vod.service.CourseService;
 
@@ -88,6 +89,30 @@ public class CourseController
             @RequestBody
                     CourseFormVo courseFormVo) {
         courseService.updateCourseInfo(courseFormVo);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "根据课程ID获取课程发布信息")
+    @GetMapping("getCoursePublishInfo/{id}")
+    public Result getCoursePublishInfo(
+            @ApiParam(name = "id",
+                      value = "课程ID",
+                      required = true)
+            @PathVariable
+                    Long id) {
+        CoursePublishVo coursePublishVo = courseService.getCoursePublishInfo(id);
+        return Result.ok(coursePublishVo);
+    }
+
+    @ApiOperation(value = "发布课程信息")
+    @PutMapping("publishCourseInfo/{id}")
+    public Result publishCourseInfo(
+            @ApiParam(name = "id",
+                      value = "课程ID",
+                      required = true)
+            @PathVariable
+                    Long id) {
+        courseService.publishCourseInfo(id);
         return Result.ok();
     }
 }

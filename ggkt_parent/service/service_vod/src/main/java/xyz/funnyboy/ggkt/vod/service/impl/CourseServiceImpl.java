@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import xyz.funnyboy.ggkt.model.vod.Course;
 import xyz.funnyboy.ggkt.model.vod.CourseDescription;
 import xyz.funnyboy.ggkt.vo.vod.CourseFormVo;
+import xyz.funnyboy.ggkt.vo.vod.CoursePublishVo;
 import xyz.funnyboy.ggkt.vo.vod.CourseQueryVo;
 import xyz.funnyboy.ggkt.vod.mapper.CourseMapper;
 import xyz.funnyboy.ggkt.vod.service.CourseDescriptionService;
@@ -17,6 +18,7 @@ import xyz.funnyboy.ggkt.vod.service.CourseService;
 import xyz.funnyboy.ggkt.vod.service.SubjectService;
 import xyz.funnyboy.ggkt.vod.service.TeacherService;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,6 +149,31 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         courseDescription.setId(course.getId());
         courseDescription.setDescription(courseFormVo.getDescription());
         courseDescriptionService.updateById(courseDescription);
+    }
+
+    /**
+     * 获取课程发布信息
+     *
+     * @param id 编号
+     * @return {@link CoursePublishVo}
+     */
+    @Override
+    public CoursePublishVo getCoursePublishInfo(Long id) {
+        return baseMapper.selectCoursePublishVoById(id);
+    }
+
+    /**
+     * 发布课程
+     *
+     * @param id 编号
+     */
+    @Override
+    public void publishCourseInfo(Long id) {
+        final Course course = new Course();
+        course.setId(id);
+        course.setPublishTime(new Date());
+        course.setStatus(1);
+        baseMapper.updateById(course);
     }
 
     /**
