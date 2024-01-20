@@ -58,7 +58,7 @@ public class CodeGet
         strategy.setEntityLombokModel(true); // lombok 模型 @Accessors(chain = true) setter链式操作
 
         strategy.setRestControllerStyle(true); //restful api风格控制器
-        strategy.setControllerMappingHyphenStyle(true); //url中驼峰转连字符
+        strategy.setControllerMappingHyphenStyle(false); //url中驼峰转连字符
 
         mpg.setStrategy(strategy);
 

@@ -9,7 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @version V1.0
  * @date 2024-01-19 23:52:02
  */
-@SpringBootApplication(scanBasePackages = "xyz.funnyboy")
+@SpringBootApplication
 // 开启服务注册发现
 @EnableDiscoveryClient
 public class ApiGatewayApplication

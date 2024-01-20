@@ -12,6 +12,11 @@
     <artifactId>service_gateway</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>xyz.funnyboy</groupId>
+            <artifactId>service_utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- 网关 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
