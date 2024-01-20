@@ -91,6 +91,7 @@ export const constantRoutes = [
     ]
   },
 
+  // 课程分类管理
   {
     path: '/subject',
     component: Layout,
@@ -153,6 +154,24 @@ export const constantRoutes = [
         component: () => import('@/views/vod/course/chart'),
         meta: { title: '课程统计' },
         hidden: true
+      }
+    ]
+  },
+
+  // 订单管理
+  {
+    path: '/order',
+    component: Layout,
+    redirect: '/order/orderInfo/list',
+    name: 'Order',
+    meta: { title: '订单管理', icon: 'el-icon-truck' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'orderInfo/list',
+        name: 'OrderInfo',
+        component: () => import('@/views/order/list'),
+        meta: { title: '订单列表' }
       }
     ]
   },
