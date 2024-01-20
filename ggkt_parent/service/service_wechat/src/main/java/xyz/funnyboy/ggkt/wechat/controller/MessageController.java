@@ -3,12 +3,14 @@ package xyz.funnyboy.ggkt.wechat.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxErrorException;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.funnyboy.ggkt.swagger.result.Result;
 import xyz.funnyboy.ggkt.wechat.service.MessageService;
 import xyz.funnyboy.ggkt.wechat.utils.SHA1;
 
@@ -35,6 +37,13 @@ public class MessageController
 
     @Autowired
     private MessageService messageService;
+
+    @ApiOperation(value = "推送支付消息")
+    @GetMapping("/pushPayMessage")
+    public Result pushPayMessage() throws WxErrorException {
+        messageService.pushPayMessage(1L);
+        return Result.ok();
+    }
 
     @ApiOperation(value = "接收微信服务器发送来的消息")
     @PostMapping

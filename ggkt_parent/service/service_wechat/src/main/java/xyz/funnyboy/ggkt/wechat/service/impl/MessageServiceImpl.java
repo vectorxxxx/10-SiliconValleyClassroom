@@ -1,6 +1,10 @@
 package xyz.funnyboy.ggkt.wechat.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -28,6 +32,9 @@ public class MessageServiceImpl implements MessageService
 
     @Autowired
     private CourseFeignClient courseFeignClient;
+
+    @Autowired
+    private WxMpService wxMpService;
 
     /**
      * 接收消息
@@ -72,6 +79,43 @@ public class MessageServiceImpl implements MessageService
             log.error("接收消息失败：" + e.getMessage(), e);
         }
         return content;
+    }
+
+    /**
+     * 推送支付消息
+     *
+     * @param orderId 订单编号
+     * @throws WxErrorException wx 错误异常
+     */
+    @Override
+    public void pushPayMessage(long orderId) throws WxErrorException {
+        // 用户openid
+        final String openid = "oKIy_6T2dI0aaBPs8TkLcf6Lcae4";
+        // 模板ID
+        final String templateId = "Yx6oBV7vu1EzE7TTdUMbLIHWIwznEW0chj9iXZ6z2wg";
+
+        // 构建消息模板
+        WxMpTemplateMessage templateMessage = WxMpTemplateMessage
+                .builder()
+                .toUser(openid)
+                .templateId(templateId)
+                .url("http://ggktfront.v4.idcfengye.com/#/pay/" + orderId)
+                .build();
+
+        // 添加数据
+        templateMessage.addData(new WxMpTemplateData("first", "亲爱的用户：您有一笔订单支付成功。", "#272727"));
+        templateMessage.addData(new WxMpTemplateData("keyword1", "1314520", "#272727"));
+        templateMessage.addData(new WxMpTemplateData("keyword2", "java基础课程", "#272727"));
+        templateMessage.addData(new WxMpTemplateData("keyword3", "2022-01-11", "#272727"));
+        templateMessage.addData(new WxMpTemplateData("keyword4", "100", "#272727"));
+        templateMessage.addData(new WxMpTemplateData("remark", "感谢你购买课程，如有疑问，随时咨询！", "#272727"));
+
+        // 发送消息
+        final String msg = wxMpService
+                .getTemplateMsgService()
+                .sendTemplateMsg(templateMessage);
+        log.info("消息发送结果：{}", msg);
+
     }
 
     /**

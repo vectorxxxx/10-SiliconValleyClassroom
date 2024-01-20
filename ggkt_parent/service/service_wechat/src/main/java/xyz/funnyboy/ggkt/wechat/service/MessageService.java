@@ -1,5 +1,7 @@
 package xyz.funnyboy.ggkt.wechat.service;
 
+import me.chanjar.weixin.common.error.WxErrorException;
+
 import java.util.Map;
 
 /**
@@ -19,4 +21,12 @@ public interface MessageService
      * @return {@link String}
      */
     String receiveMessage(Map<String, String> param);
+
+    /**
+     * 推送支付消息
+     *
+     * @param orderId 订单编号
+     * @throws WxErrorException wx 错误异常
+     */
+    void pushPayMessage(long orderId) throws WxErrorException;
 }
