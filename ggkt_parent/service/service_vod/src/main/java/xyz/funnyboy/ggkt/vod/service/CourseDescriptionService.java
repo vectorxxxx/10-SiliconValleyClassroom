@@ -20,4 +20,12 @@ public interface CourseDescriptionService extends IService<CourseDescription>
      * @param id 编号
      */
     void removeByCourseId(Long id);
+
+    /**
+     * 按课程 ID 获取描述
+     *
+     * @param courseId
+     * @return {@link String}
+     */
+    String getDescriptionByCourseId(Long courseId);
 }

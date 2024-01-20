@@ -28,4 +28,17 @@ public class CourseDescriptionServiceImpl extends ServiceImpl<CourseDescriptionM
     public void removeByCourseId(Long id) {
         baseMapper.delete(new LambdaQueryWrapper<CourseDescription>().eq(CourseDescription::getCourseId, id));
     }
+
+    /**
+     * 按课程 ID 获取描述
+     *
+     * @param courseId
+     * @return {@link String}
+     */
+    @Override
+    public String getDescriptionByCourseId(Long courseId) {
+        return baseMapper
+                .selectOne(new LambdaQueryWrapper<CourseDescription>().eq(CourseDescription::getCourseId, courseId))
+                .getDescription();
+    }
 }

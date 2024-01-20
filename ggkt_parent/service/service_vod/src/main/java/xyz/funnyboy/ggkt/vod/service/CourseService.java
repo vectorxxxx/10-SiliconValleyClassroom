@@ -7,6 +7,7 @@ import xyz.funnyboy.ggkt.vo.vod.CourseFormVo;
 import xyz.funnyboy.ggkt.vo.vod.CoursePublishVo;
 import xyz.funnyboy.ggkt.vo.vod.CourseQueryVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,4 +74,12 @@ public interface CourseService extends IService<Course>
      * @param id 编号
      */
     void removeCourseInfoById(Long id);
+
+    /**
+     * 按关键字查找
+     *
+     * @param keyword 关键词
+     * @return {@link List}<{@link Course}>
+     */
+    List<Course> findByKeyword(String keyword);
 }

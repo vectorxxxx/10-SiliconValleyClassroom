@@ -24,7 +24,7 @@ import java.util.List;
  * @author vectorx
  * @since 2024-01-20
  */
-@Api(tags = "微信菜单管理")
+@Api(tags = "微信公众号菜单管理")
 @RestController
 @RequestMapping("/admin/wechat/menu")
 @Slf4j

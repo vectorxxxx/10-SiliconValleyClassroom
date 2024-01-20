@@ -197,6 +197,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     }
 
     /**
+     * 按关键字查找
+     *
+     * @param keyword 关键词
+     * @return {@link List}<{@link Course}>
+     */
+    @Override
+    public List<Course> findByKeyword(String keyword) {
+        final List<Course> courseList = baseMapper.selectList(new LambdaQueryWrapper<Course>().like(Course::getTitle, keyword));
+        courseList.forEach(course -> course
+                .getParam()
+                .put("description", courseDescriptionService.getDescriptionByCourseId(course.getId())));
+        return courseList;
+    }
+
+    /**
      * 按 ID 获取名称
      *
      * @param course 课程

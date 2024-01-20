@@ -6,7 +6,7 @@ import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import xyz.funnyboy.ggkt.wechat.utils.ConstantPropertiesUtil;
 
 /**
@@ -16,7 +16,7 @@ import xyz.funnyboy.ggkt.wechat.utils.ConstantPropertiesUtil;
  * @version 1.0.0
  * @date 2024/01/20
  */
-@Component
+@Configuration
 public class WeChatMpConfig
 {
 
