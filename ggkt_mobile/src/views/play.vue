@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video id="player-container-id" preload="auto" width="600" height="400" playsinline webkit-playsinline
+    <video id="player-container-id" preload="auto" width="430" height="400" playsinline webkit-playsinline
            x5-playsinline></video>
     <h1 class="van-ellipsis course_title">{{ courseVo.title }}</h1>
 
@@ -110,11 +110,10 @@ export default {
       }
 
       vodApi.getPlayAuth(videoId).then(response => {
-        console.log(response.data);
         this.play(response.data);
 
         //展开章节
-        this.activeNames = [response.data.chapterId];
+        // this.activeNames = [response.data.chapterId];
         //选中播放视频
         this.activeVideoId = response.data.videoId;
       });
@@ -126,7 +125,8 @@ export default {
         /**player-container-id 为播放器容器ID，必须与html中一致*/
         fileID: data.videoSourceId, /**请传入需要播放的视频fileID 必须 */
         appID: data.appId, /**请传入点播账号的子应用appID 必须 */
-        psign: ""
+        psign: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6MTI1MjUxMDgzMywiZmlsZUlkIjoiMzI3MDgzNTAxNTI5MTI1NjYyNSIsImN1cnJlbnRUaW1lU3RhbXAiOjE3MDU4MzM2NzUsImNvbnRlbnRJbmZvIjp7ImF1ZGlvVmlkZW9UeXBlIjoiT3JpZ2luYWwiLCJpbWFnZVNwcml0ZURlZmluaXRpb24iOjEwfSwiZXhwaXJlVGltZVN0YW1wIjoxNzA1ODUyODAwLCJ1cmxBY2Nlc3NJbmZvIjp7ImRvbWFpbiI6IjEyNTI1MTA4MzMudm9kLXFjbG91ZC5jb20iLCJzY2hlbWUiOiJIVFRQIn19.WV8PjxRD40vzc97BuMHHmEXh-lHvaLrR_1L_ZIKGPfU", // 请传入播放器签名psign 必须
+        autoplay: false // 是否自动播放
         /**其他参数请在开发文档中查看 */
       });
     }
