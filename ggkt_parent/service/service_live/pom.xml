@@ -14,6 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>xyz.funnyboy</groupId>
+            <artifactId>service_user_client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>xyz.funnyboy</groupId>
             <artifactId>service_course_client</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

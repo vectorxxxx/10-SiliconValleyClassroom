@@ -9,15 +9,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import xyz.funnyboy.ggkt.client.course.CourseFeignClient;
+import xyz.funnyboy.ggkt.client.user.UserInfoFeignClient;
 import xyz.funnyboy.ggkt.live.mapper.LiveCourseMapper;
 import xyz.funnyboy.ggkt.live.mtcloud.CommonResult;
 import xyz.funnyboy.ggkt.live.mtcloud.MTCloud;
 import xyz.funnyboy.ggkt.live.service.*;
 import xyz.funnyboy.ggkt.model.live.*;
+import xyz.funnyboy.ggkt.model.user.UserInfo;
 import xyz.funnyboy.ggkt.model.vod.Teacher;
 import xyz.funnyboy.ggkt.swagger.exception.GgktException;
 import xyz.funnyboy.ggkt.swagger.utils.DateUtil;
@@ -30,6 +33,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -58,6 +62,9 @@ public class LiveCourseServiceImpl extends ServiceImpl<LiveCourseMapper, LiveCou
 
     @Resource
     private LiveCourseGoodsService liveCourseGoodsService;
+
+    @Autowired
+    private UserInfoFeignClient userInfoFeignClient;
 
     @Resource
     private MTCloud mtCloudClient;
@@ -348,14 +355,108 @@ public class LiveCourseServiceImpl extends ServiceImpl<LiveCourseMapper, LiveCou
         return liveCourseVoList;
     }
 
-    private int getLiveStatus(LiveCourseVo liveCourseVo) {
+    /**
+     * 获取播放权限
+     *
+     * @param id     编号
+     * @param userId 用户 ID
+     * @return {@link JSONObject}
+     */
+    @Override
+    public JSONObject getPlayAuth(Long id, Long userId) {
+        // 直播课程信息
+        final LiveCourse liveCourse = baseMapper.selectById(id);
+        // 用户信息
+        final UserInfo userInfo = userInfoFeignClient.getById(userId);
+
+        // course_id	int	Y	直播ID
+        // uid	String	Y	接入方用户唯一ID。uid只能包含字母、数字、_、-、*、:，最长32位
+        // nickname	String	Y	用户昵称
+        // role	String	Y	用户身份(user/admin/guest/watch/spadmin，分别对应普通用户/管理员(助教)/游客(不参与抽奖活动)/直播监课/管理员)
+        // expire	int	N	有效期,默认:3600(单位:秒)，最小值为 60s，最大值为 7d
+        // options	Object	N	其它可选项
+        final String courseId = liveCourse
+                .getCourseId()
+                .toString();
+        final String uid = userId.toString();
+        final String nickName = userInfo.getNickName();
+        final String role = MTCloud.ROLE_USER;
+        final int expire = 3600;
+        final HashMap<Object, Object> options = new HashMap<>();
+        try {
+            final String res = mtCloudClient.courseAccess(courseId, uid, nickName, role, expire, options);
+            log.info("res::" + res);
+
+            // playbackUrl	string	回放地址
+            // liveUrl	string	直播地址
+            // liveVideoUrl	string	直播视频外链地址
+            // access_token	string	用户的access_token
+            // playbackOutUrl	string	回放纯视频播放地址
+            // miniprogramUrl	string	小程序web-view的直播或回放地址（未传miniprogramAppid参数时返回默认域名的直播或回放地址）
+            // adminMiniUrl	string	手机端管理地址（role角色spadmin时返回）
+            CommonResult<JSONObject> commonResult = JSON.parseObject(res, CommonResult.class);
+            if (Integer.parseInt(commonResult.getCode()) == MTCloud.CODE_SUCCESS) {
+                JSONObject object = commonResult.getData();
+                log.info("access::" + object.getString("access_token"));
+                return object;
+            }
+            else {
+                final String msg = commonResult.getmsg();
+                log.error("获取失败: " + msg);
+                throw new GgktException(20001, "获取失败: " + msg);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 按 ID 获取信息
+     *
+     * @param courseId 课程编号
+     * @return {@link Map}<{@link String}, {@link Object}>
+     */
+    @Override
+    public Map<String, Object> getInfoById(Long courseId) {
+        // 直播基本信息
+        final LiveCourse liveCourse = this.getById(courseId);
+        if (liveCourse == null) {
+            return null;
+        }
+
+        liveCourse
+                .getParam()
+                .put("startTimeString", new DateTime(liveCourse.getStartTime()).toString("yyyy年MM月dd HH:mm"));
+        liveCourse
+                .getParam()
+                .put("endTimeString", new DateTime(liveCourse.getEndTime()).toString("yyyy年MM月dd HH:mm"));
+
+        // 讲师信息
+        final Teacher teacher = teacherFeignClient.getTeacherInfo(liveCourse.getTeacherId());
+
+        // 直播详情信息
+        final LiveCourseDescription liveCourseDescription = liveCourseDescriptionService.getLiveCourseById(courseId);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("liveCourse", liveCourse);
+        map.put("liveStatus", this.getLiveStatus(liveCourse));
+        map.put("teacher", teacher);
+        map.put("description", null != liveCourseDescription ?
+                               liveCourseDescription.getDescription() :
+                               "");
+        return map;
+    }
+
+    private int getLiveStatus(LiveCourse liveCourse) {
         // 直播状态 0：未开始 1：直播中 2：直播结束
         int liveStatus = 0;
         Date curTime = new Date();
-        if (DateUtil.dateCompare(curTime, liveCourseVo.getStartTime())) {
+        if (DateUtil.dateCompare(curTime, liveCourse.getStartTime())) {
             liveStatus = 0;
         }
-        else if (DateUtil.dateCompare(curTime, liveCourseVo.getEndTime())) {
+        else if (DateUtil.dateCompare(curTime, liveCourse.getEndTime())) {
             liveStatus = 1;
         }
         else {

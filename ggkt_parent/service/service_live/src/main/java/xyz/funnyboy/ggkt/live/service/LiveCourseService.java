@@ -1,5 +1,6 @@
 package xyz.funnyboy.ggkt.live.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -9,6 +10,7 @@ import xyz.funnyboy.ggkt.vo.live.LiveCourseFormVo;
 import xyz.funnyboy.ggkt.vo.live.LiveCourseVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -79,4 +81,21 @@ public interface LiveCourseService extends IService<LiveCourse>
      * @return {@link List}<{@link LiveCourseVo}>
      */
     List<LiveCourseVo> findLatelyList();
+
+    /**
+     * 获取播放权限
+     *
+     * @param id     编号
+     * @param userId 用户 ID
+     * @return {@link JSONObject}
+     */
+    JSONObject getPlayAuth(Long id, Long userId);
+
+    /**
+     * 按 ID 获取信息
+     *
+     * @param courseId 课程编号
+     * @return {@link Map}<{@link String}, {@link Object}>
+     */
+    Map<String, Object> getInfoById(Long courseId);
 }
