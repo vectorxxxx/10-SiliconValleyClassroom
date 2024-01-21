@@ -16,6 +16,7 @@ import xyz.funnyboy.ggkt.model.activity.CouponUse;
 import xyz.funnyboy.ggkt.model.user.UserInfo;
 import xyz.funnyboy.ggkt.vo.activity.CouponUseQueryVo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,6 +63,23 @@ public class CouponInfoServiceImpl extends ServiceImpl<CouponInfoMapper, CouponI
         final List<CouponUse> couponUseList = pageModel.getRecords();
         couponUseList.forEach(this::getUserInfoById);
         return pageModel;
+    }
+
+    /**
+     * 更新优惠券信息使用状态
+     *
+     * @param couponUseId 优惠券使用ID
+     * @param orderId     订单编号
+     */
+    @Override
+    public void updateCouponInfoUseStatus(Long couponUseId, Long orderId) {
+        CouponUse couponUse = new CouponUse();
+        couponUse.setId(couponUseId);
+        couponUse.setOrderId(orderId);
+        // 购物券状态（0：未使用 1：已使用）
+        couponUse.setCouponStatus("1");
+        couponUse.setUsingTime(new Date());
+        couponUseService.updateById(couponUse);
     }
 
     /**

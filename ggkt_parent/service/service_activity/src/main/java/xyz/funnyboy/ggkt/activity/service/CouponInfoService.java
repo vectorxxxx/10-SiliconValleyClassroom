@@ -26,4 +26,12 @@ public interface CouponInfoService extends IService<CouponInfo>
      * @return {@link IPage}<{@link CouponUse}>
      */
     IPage<CouponUse> selectCouponUsePage(Page<CouponUse> pageParam, CouponUseQueryVo couponUseQueryVo);
+
+    /**
+     * 更新优惠券信息使用状态
+     *
+     * @param couponUseId 优惠券使用ID
+     * @param orderId     订单编号
+     */
+    void updateCouponInfoUseStatus(Long couponUseId, Long orderId);
 }

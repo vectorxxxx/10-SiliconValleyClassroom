@@ -12,7 +12,7 @@ service.interceptors.request.use(
   (config) => {
     //获取localStorage里面的token值
     let token = window.localStorage.getItem('token') || '';
-    if (token != '') {
+    if (token) {
       //把token值放到header里面
       config.headers['token'] = token; // 'eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWKi5NUrJSCjAK0A0Ndg1S0lFKrShQsjI0MzY3MTQxMTbWUSotTi3yTAGKQZh-ibmpQB1KtQARkjypPAAAAA.B6dziXWxcc2mIYYaDQnXB1t0IHwQK-GwWNFsAQ0Z7CbCBVb11uoNjojWYotC8YEdlVW9Ahtq99LWtz1_Wbhhlw';//cookie.get('guli_token');
     }

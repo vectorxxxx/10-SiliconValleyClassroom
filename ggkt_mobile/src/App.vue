@@ -35,8 +35,9 @@ export default {
             // 所有页面都必须登录，两次调整登录，这里与接口返回208状态
             token = window.localStorage.getItem('token') || '';
             if (token == '') {
-                let url = window.location.href.replace('#', 'guiguketan')
-                window.location = 'http://ggktfront.v5.idcfengye.com/api/user/wechat/authorize?returnUrl=' + url
+                let url = window.location.href.replace('#', 'guiguketan');
+              // window.location = 'http://ggktfront.v5.idcfengye.com/api/user/openid/authorize?returnUrl=' + url
+              window.location = 'http://ggktfront.v5.idcfengye.com/api/user/wechat/authorize?returnUrl=' + url
             }
             console.log('token2：'+window.localStorage.getItem('token'));
 

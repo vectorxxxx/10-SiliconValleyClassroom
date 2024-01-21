@@ -1,6 +1,7 @@
 package xyz.funnyboy.ggkt.client.course;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import xyz.funnyboy.ggkt.model.vod.Course;
@@ -12,6 +13,7 @@ import java.util.List;
  * @version V1.0
  * @date 2024-01-20 21:53:25
  */
+@Component
 @FeignClient(value = "service-vod")
 public interface CourseFeignClient
 {
@@ -25,4 +27,9 @@ public interface CourseFeignClient
     List<Course> findByKeyword(
             @PathVariable("keyword")
                     String keyword);
+
+    @GetMapping("/api/vod/course/inner/getById/{courseId}")
+    Course getById(
+            @PathVariable("courseId")
+                    Long courseId);
 }

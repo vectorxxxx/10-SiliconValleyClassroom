@@ -3,7 +3,9 @@ package xyz.funnyboy.ggkt.order.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.funnyboy.ggkt.model.order.OrderInfo;
+import xyz.funnyboy.ggkt.vo.order.OrderFormVo;
 import xyz.funnyboy.ggkt.vo.order.OrderInfoQueryVo;
+import xyz.funnyboy.ggkt.vo.order.OrderInfoVo;
 
 import java.util.Map;
 
@@ -26,4 +28,27 @@ public interface OrderInfoService extends IService<OrderInfo>
      * @return {@link Map}<{@link String}, {@link Object}>
      */
     Map<String, Object> findPageOrderInfo(Page<OrderInfo> pageParam, OrderInfoQueryVo orderInfoQueryVo);
+
+    /**
+     * 生成订单
+     *
+     * @param orderFormVo 查询 VO
+     * @return {@link Long}
+     */
+    Long submitOrder(OrderFormVo orderFormVo);
+
+    /**
+     * 按 ID 获取订单信息
+     *
+     * @param id 编号
+     * @return {@link OrderInfoVo}
+     */
+    OrderInfoVo getOrderInfoById(Long id);
+
+    /**
+     * 更新订单状态
+     *
+     * @param outTradeNo 交易流水号
+     */
+    void updateOrderStatus(String outTradeNo);
 }

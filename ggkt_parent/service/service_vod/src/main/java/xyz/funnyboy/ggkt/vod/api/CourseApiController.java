@@ -29,9 +29,20 @@ public class CourseApiController
     @Autowired
     private CourseService courseService;
 
+    @ApiOperation(value = "根据ID查询课程")
+    @GetMapping("inner/getById/{courseId}")
+    public Course getById(
+            @ApiParam(name = "courseId",
+                      value = "课程ID",
+                      required = true)
+            @PathVariable("courseId")
+                    Long courseId) {
+        return courseService.getById(courseId);
+    }
+
     @ApiOperation(value = "根据课程ID查询课程")
     @GetMapping("/getInfo/{courseId}")
-    public Result getById(
+    public Result getInfo(
             @ApiParam(name = "courseId",
                       value = "课程ID",
                       required = true)
