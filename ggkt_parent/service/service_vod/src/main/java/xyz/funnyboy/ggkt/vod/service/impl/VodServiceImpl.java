@@ -11,18 +11,20 @@ import com.tencentcloudapi.vod.v20180717.VodClient;
 import com.tencentcloudapi.vod.v20180717.models.DeleteMediaRequest;
 import com.tencentcloudapi.vod.v20180717.models.DeleteMediaResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.funnyboy.ggkt.model.vod.Video;
 import xyz.funnyboy.ggkt.swagger.exception.GgktException;
+import xyz.funnyboy.ggkt.vod.service.VideoService;
 import xyz.funnyboy.ggkt.vod.service.VodService;
 import xyz.funnyboy.ggkt.vod.utils.ConstantPropertiesUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 视频点播Service
@@ -35,6 +37,12 @@ import java.util.UUID;
 @Slf4j
 public class VodServiceImpl implements VodService
 {
+
+    @Value("${tencent.video.appid}")
+    private String appId;
+
+    @Autowired
+    private VideoService videoService;
 
     /**
      * 上传视频
@@ -158,5 +166,25 @@ public class VodServiceImpl implements VodService
             log.error("删除视频失败：" + e.getMessage(), e);
             throw new GgktException(20001, "删除视频失败：" + e.getMessage());
         }
+    }
+
+    /**
+     * 获取视频播放凭证
+     *
+     * @param videoId 视频 ID
+     * @return {@link Map}<{@link String},{@link Object}>
+     */
+    @Override
+    public Map<String, Object> getPlayAuth(Long videoId) {
+        // 根据小节id获取小节对象，获取腾讯云视频id
+        final Video video = videoService.getById(videoId);
+        if (video == null) {
+            throw new GgktException(20001, "小节信息不存在");
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("videoSourceId", video.getVideoSourceId());
+        map.put("appId", appId);
+        return map;
     }
 }

@@ -2,6 +2,8 @@ package xyz.funnyboy.ggkt.vod.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+
 /**
  * 视频点播Service
  *
@@ -25,4 +27,12 @@ public interface VodService
      * @param videoSourceId 视频源 ID
      */
     void removeVideo(String videoSourceId);
+
+    /**
+     * 获取视频播放凭证
+     *
+     * @param videoId 视频 ID
+     * @return {@link Map}<{@link String},{@link Object}>
+     */
+    Map<String, Object> getPlayAuth(Long videoId);
 }

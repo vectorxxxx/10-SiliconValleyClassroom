@@ -3,18 +3,43 @@
 <mapper namespace="xyz.funnyboy.ggkt.vod.mapper.CourseMapper">
     <select id="selectCoursePublishVoById" resultType="xyz.funnyboy.ggkt.vo.vod.CoursePublishVo">
         select c.id,
-               c.title,
-               c.cover,
-               c.lesson_num as lessonNum,
-               c.price,
-               t.name       as teacherName,
-               s1.title     as subjectParentTitle,
-               s2.title     as subjectTitle
-        from course c
+        c.title,
+        c.cover,
+        c.lesson_num as lessonNum,
+        c.price,
+        t.name as teacherName,
+        s1.title as subjectParentTitle,
+        s2.title as subjectTitle
+        from
+        <include refid="tables"/>
+        where c.id = #{id}
+    </select>
+
+    <select id="selectCourseVoById" resultType="xyz.funnyboy.ggkt.vo.vod.CourseVo">
+        select c.id,
+        c.title,
+        s1.title as subjectParentTitle,
+        s2.title as subjectTitle,
+        t.id as teacherId,
+        t.name as teacherName,
+        c.lesson_num as lessonNum,
+        c.price,
+        c.cover,
+        c.buy_count as buyCount,
+        c.view_count as viewCount,
+        c.status,
+        c.publish_time as publishTime
+        from
+        <include refid="tables"/>
+        where c.id=#{id}
+    </select>
+
+    <sql id="tables">
+        course
+        c
                  left join teacher t
                            on c.teacher_id = t.id
                  left join subject s1 on c.subject_parent_id = s1.id
                  left join subject s2 on c.subject_id = s2.id
-        where c.id = #{id}
-    </select>
+    </sql>
 </mapper>

@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import xyz.funnyboy.ggkt.model.vod.Course;
 import xyz.funnyboy.ggkt.model.vod.CourseDescription;
-import xyz.funnyboy.ggkt.vo.vod.CourseFormVo;
-import xyz.funnyboy.ggkt.vo.vod.CoursePublishVo;
-import xyz.funnyboy.ggkt.vo.vod.CourseQueryVo;
+import xyz.funnyboy.ggkt.model.vod.Teacher;
+import xyz.funnyboy.ggkt.vo.vod.*;
 import xyz.funnyboy.ggkt.vod.mapper.CourseMapper;
 import xyz.funnyboy.ggkt.vod.service.*;
 
@@ -209,6 +208,43 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
                 .getParam()
                 .put("description", courseDescriptionService.getDescriptionByCourseId(course.getId())));
         return courseList;
+    }
+
+    /**
+     * 按 ID 获取信息
+     *
+     * @param courseId 课程编号
+     * @return {@link Map}<{@link String}, {@link Object}>
+     */
+    @Override
+    public Map<String, Object> getInfoById(Long courseId) {
+        // view_count浏览数量 +1
+        final Course course = baseMapper.selectById(courseId);
+        course.setViewCount(course.getViewCount() + 1);
+        baseMapper.updateById(course);
+
+        // 课程详情数据
+        CourseVo courseVo = baseMapper.selectCourseVoById(courseId);
+
+        // 课程章节小节数据
+        final List<ChapterVo> chapterVoList = chapterService.getNestedTreeList(courseId);
+
+        // 课程描述信息
+        final String description = courseDescriptionService.getDescriptionByCourseId(courseId);
+
+        // 课程所属讲师信息
+        final Teacher teacher = teacherService.getById(course.getTeacherId());
+
+        //封装map集合，返回
+        Map<String, Object> map = new HashMap();
+        map.put("courseVo", courseVo);
+        map.put("chapterVoList", chapterVoList);
+        map.put("description", StringUtils.isEmpty(description) ?
+                               "" :
+                               description);
+        map.put("teacher", teacher);
+        map.put("isBuy", false);//是否购买
+        return map;
     }
 
     /**

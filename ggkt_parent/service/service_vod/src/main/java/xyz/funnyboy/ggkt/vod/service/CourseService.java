@@ -82,4 +82,12 @@ public interface CourseService extends IService<Course>
      * @return {@link List}<{@link Course}>
      */
     List<Course> findByKeyword(String keyword);
+
+    /**
+     * 按 ID 获取信息
+     *
+     * @param courseId 课程编号
+     * @return {@link Map}<{@link String}, {@link Object}>
+     */
+    Map<String, Object> getInfoById(Long courseId);
 }

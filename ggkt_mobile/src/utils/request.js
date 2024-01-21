@@ -25,7 +25,7 @@ service.interceptors.request.use(
 // http response 拦截器
 service.interceptors.response.use(
   (response) => {
-    if (response.data.code == 208) {
+    if (response.data.code === 208) {
       //debugger
       // 替换# 后台获取不到#后面的参数
       let url = window.location.href.replace('#', 'guiguketan');
@@ -33,7 +33,7 @@ service.interceptors.response.use(
         'http://ggktfront.v5.idcfengye.com/api/user/wechat/authorize?returnUrl=' +
         url;
     } else {
-      if (response.data.code == 20000) {
+      if (response.data.code === 200) {
         return response.data;
       } else {
         console.log('response.data:' + JSON.stringify(response.data));
