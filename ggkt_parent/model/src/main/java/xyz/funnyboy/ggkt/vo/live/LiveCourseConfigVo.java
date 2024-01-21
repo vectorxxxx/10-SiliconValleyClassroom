@@ -8,6 +8,14 @@ import xyz.funnyboy.ggkt.model.live.LiveCourseGoods;
 
 import java.util.List;
 
+/**
+ * 直播课程配置 VO
+ *
+ * @author VectorX
+ * @version 1.0.0
+ * @date 2024/01/22
+ * @see LiveCourseConfig
+ */
 @Data
 @ApiModel(description = "LiveCourseConfig")
 public class LiveCourseConfigVo extends LiveCourseConfig

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import xyz.funnyboy.ggkt.model.vod.Course;
+import xyz.funnyboy.ggkt.model.vod.Teacher;
 
 import java.util.List;
 
@@ -32,4 +33,9 @@ public interface CourseFeignClient
     Course getById(
             @PathVariable("courseId")
                     Long courseId);
+
+    @GetMapping("/admin/vod/teacher/inner/getTeacher/{id}")
+    Teacher getTeacherInfo(
+            @PathVariable("id")
+                    Long id);
 }

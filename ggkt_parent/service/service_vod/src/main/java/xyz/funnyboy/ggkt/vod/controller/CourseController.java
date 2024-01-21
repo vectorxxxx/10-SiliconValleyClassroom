@@ -13,6 +13,7 @@ import xyz.funnyboy.ggkt.vo.vod.CoursePublishVo;
 import xyz.funnyboy.ggkt.vo.vod.CourseQueryVo;
 import xyz.funnyboy.ggkt.vod.service.CourseService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -126,6 +127,13 @@ public class CourseController
                     Long id) {
         courseService.removeCourseInfoById(id);
         return Result.ok();
+    }
+
+    @ApiOperation(value = "查询所有课程")
+    @GetMapping("findAll")
+    public Result findAll() {
+        List<Course> list = courseService.findList();
+        return Result.ok(list);
     }
 }
 

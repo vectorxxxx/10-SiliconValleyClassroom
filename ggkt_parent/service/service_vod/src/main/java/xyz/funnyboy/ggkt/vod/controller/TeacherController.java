@@ -146,5 +146,13 @@ public class TeacherController
                Result.ok() :
                Result.fail();
     }
+
+    @ApiOperation("根据id查询")
+    @GetMapping("inner/getTeacher/{id}")
+    public Teacher getTeacherLive(
+            @PathVariable("id")
+                    Long id) {
+        return teacherService.getById(id);
+    }
 }
 

@@ -248,6 +248,18 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     }
 
     /**
+     * 查找列表
+     *
+     * @return {@link List}<{@link Course}>
+     */
+    @Override
+    public List<Course> findList() {
+        final List<Course> courseList = baseMapper.selectList(null);
+        courseList.forEach(this::getNameById);
+        return courseList;
+    }
+
+    /**
      * 按 ID 获取名称
      *
      * @param course 课程

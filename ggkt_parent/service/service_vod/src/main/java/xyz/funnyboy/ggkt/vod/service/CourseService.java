@@ -90,4 +90,11 @@ public interface CourseService extends IService<Course>
      * @return {@link Map}<{@link String}, {@link Object}>
      */
     Map<String, Object> getInfoById(Long courseId);
+
+    /**
+     * 查找列表
+     *
+     * @return {@link List}<{@link Course}>
+     */
+    List<Course> findList();
 }
