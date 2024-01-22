@@ -125,7 +125,7 @@ export default {
         /**player-container-id 为播放器容器ID，必须与html中一致*/
         fileID: data.videoSourceId, /**请传入需要播放的视频fileID 必须 */
         appID: data.appId, /**请传入点播账号的子应用appID 必须 */
-        psign: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6MTI1MjUxMDgzMywiZmlsZUlkIjoiMzI3MDgzNTAxNTI5MTI1NjYyNSIsImN1cnJlbnRUaW1lU3RhbXAiOjE3MDU4MzM2NzUsImNvbnRlbnRJbmZvIjp7ImF1ZGlvVmlkZW9UeXBlIjoiT3JpZ2luYWwiLCJpbWFnZVNwcml0ZURlZmluaXRpb24iOjEwfSwiZXhwaXJlVGltZVN0YW1wIjoxNzA1ODUyODAwLCJ1cmxBY2Nlc3NJbmZvIjp7ImRvbWFpbiI6IjEyNTI1MTA4MzMudm9kLXFjbG91ZC5jb20iLCJzY2hlbWUiOiJIVFRQIn19.WV8PjxRD40vzc97BuMHHmEXh-lHvaLrR_1L_ZIKGPfU", // 请传入播放器签名psign 必须
+        psign: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6MTI1MjUxMDgzMywiZmlsZUlkIjoiMzI3MDgzNTAxNTM0NDMzODc0MyIsImN1cnJlbnRUaW1lU3RhbXAiOjE3MDU5MzI1NDYsImNvbnRlbnRJbmZvIjp7ImF1ZGlvVmlkZW9UeXBlIjoiT3JpZ2luYWwiLCJpbWFnZVNwcml0ZURlZmluaXRpb24iOjEwfSwidXJsQWNjZXNzSW5mbyI6eyJkb21haW4iOiIxMjUyNTEwODMzLnZvZC1xY2xvdWQuY29tIiwic2NoZW1lIjoiSFRUUFMifX0.uVNwTIWS0OloDLK_UKGNg2jRe0TZm56RHB079GrOoFA", // 请传入播放器签名psign 必须
         autoplay: false // 是否自动播放
         /**其他参数请在开发文档中查看 */
       });

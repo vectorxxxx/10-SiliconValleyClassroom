@@ -1,6 +1,5 @@
 package xyz.funnyboy.ggkt.live;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -16,8 +15,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 // 开启Feign功能
 @EnableFeignClients(basePackages = "xyz.funnyboy")
-// Mapper扫描
-@MapperScan(basePackages = "xyz.funnyboy.ggkt.live.mapper")
 public class ServiceLiveApplication
 {
     public static void main(String[] args) {

@@ -5,7 +5,7 @@
 <!--      <router-link to="/info">详情页</router-link> |-->
 <!--      <router-link to="/list">列表页</router-link> |-->
 <!--      <router-link to="/order">下单页</router-link>-->
-        <van-button round block type="info" @click="clearData">清空localStorage</van-button>
+<!--        <van-button round block type="info" @click="clearData">清空localStorage</van-button>-->
     </div>
     <router-view />
   </div>

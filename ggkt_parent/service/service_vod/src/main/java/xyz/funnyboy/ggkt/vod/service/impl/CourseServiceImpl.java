@@ -277,7 +277,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         // 二级分类名称
         final Long subjectId = course.getSubjectId();
         if (teacherId != null) {
-            param.put("subjectName", subjectService
+            param.put("subjectTitle", subjectService
                     .getById(subjectId)
                     .getTitle());
         }
@@ -285,7 +285,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         // 三级分类名称
         final Long subjectParentId = course.getSubjectParentId();
         if (subjectParentId != null) {
-            param.put("subjectParentName", subjectService
+            param.put("subjectParentTitle", subjectService
                     .getById(subjectParentId)
                     .getTitle());
         }
